@@ -34,31 +34,70 @@
       'Berne, Eric', 'Berra, Yogi', 'Berry, Wendell', 'Bevan, Aneurin', 'Ben-Gurion, David', 'Bevel, Ken', 'Biden, Joseph', 'Bennington, Chester', 'Bierce, Ambrose',
       'Billings, Josh', 'Birrell, Augustine', 'Blair, Tony', 'Beecher, Henry', 'Biondo, Frank'
     ];
-    
+
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    let min = 1500;
+    let max = 1600;
+    console.log("Inventors born in the 1500's");
+    console.table(inventors.filter(i => min <= i.year && i.year < max));
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    console.log('Inventors first and last names');
+    console.table(inventors.map(({ first, last }) => ({ first, last })));
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    function sortInventorsBirthdateOldToYoung(a, b) {
+        if (a.year < b.year) return -1;
+        if (a.year > b.year) return 1;
+        return 0;
+    };
+    console.log('Inventors sorted by birthdate oldest to youngest');
+    console.table(inventors.sort(sortInventorsBirthdateOldToYoung));
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    console.log('Inventors total years lived');
+    console.table(inventors.reduce((acc, i) => acc += i.passed - i.year, 0));
 
     // 5. Sort the inventors by years lived
+    function sortInventorsByYearsLived(a, b) {
+        if (a.age < b.age) return 1;
+        if (a.age > b.age) return -1;
+        return 0;
+    };
+    console.log('Inventors sorted by years lived');
+    console.table(inventors
+        .map(i => ({ ...i, age: i.passed - i.year }))
+        .sort(sortInventorsByYearsLived));
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    // const categories = document.querySelector('.mw-category');
+    // const list = Array.from(categories.querySelectorAll('a'));
+    // console.log("Boulevards in Paris that contain 'de' anywhere in the name");
+    // console.table(list.filter(i => i.innerHTML.includes('de')).map(i => i.innerHTML));
 
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const last = people.map(i => i.substr(0, i.indexOf(', ')));
+    console.log('People sorted alphabetically by last name');
+    console.table(last.sort().map((i, key) => people[key]));
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    console.log('Sum instances of each word');
+    console.log(data.reduce((acc, i) => {
+        if (!acc[i]) {
+            acc[i] = 0;
+        }
+        acc[i] += 1;
+        return acc;
+    }, {}));
 
   </script>
 </body>
